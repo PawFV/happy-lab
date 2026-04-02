@@ -36,6 +36,20 @@ graph TD
 
     CORE -.->|"monitoring"| HUB
 ```
+## Status & Roadmap
+
+### ✅ Done / Usable
+- **VulnBank:** Intentionally vulnerable Flask banking app, fully containerized and deployable.
+- **VulnShop:** Intentionally vulnerable Express/Node.js shop app, fully containerized and deployable.
+- **Scoreboard:** Basic CTF-style scoreboard to track vulnerabilities exploited.
+- **Deployment Pipeline:** Scripts (`deploy.sh`, `setup-pi.sh`) and `docker-compose.yml` for easy deployment to any Docker host.
+
+### 🚧 In Progress / Planned
+- **Honeypots (Lab Security):** Configuration of Cowrie SSH and Dionaea on Raspberry Pi Zero nodes.
+- **Victim Nodes (Lab Security):** Setup of real vulnerable target services on dedicated physical hardware (Pi Zero).
+- **Smart Hub (Smart Home):** Admin dashboard and IoT gateway for managing home sensors.
+- **Sensor Nodes (Smart Home):** Integration of ESP32-CAMs (video) and INMP441 microphones (audio) over WiFi/MQTT.
+
 ## The Projects
 
 ### 1. Lab Security — Pentesting Lab
