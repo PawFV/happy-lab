@@ -1,0 +1,34 @@
+---
+description: ESP32/PlatformIO C++ conventions for IoT firmware
+globs: "iot/**/*.cpp,iot/**/*.h,iot/**/platformio.ini"
+alwaysApply: false
+---
+
+# ESP32 / PlatformIO Conventions
+
+- Framework: PlatformIO with Arduino
+- Shared libraries: `iot/common/lib/` (mqtt_client, wifi_manager, sensor_base)
+- Each sensor node: `iot/sensor-node/` structure (copy as template)
+- Config: `include/config.h` per node
+
+## Project Structure per Node
+
+```
+iot/<node-name>/
+├── src/main.cpp
+├── include/config.h
+├── platformio.ini
+└── lib/              (symlink or copy from iot/common/lib/)
+```
+
+## Naming
+
+- Functions: `camelCase`
+- Constants/defines: `UPPER_SNAKE_CASE`
+- Classes: `PascalCase`
+
+## MQTT Topics
+
+Pattern: `happy/<node-type>/<node-id>/<measurement>`
+
+Example: `happy/sensor/1/temperature`

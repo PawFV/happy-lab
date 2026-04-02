@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CTF Scoreboard</title>
+    <style>
+        body { font-family: monospace; background-color: #111; color: #0f0; margin: 0; padding: 20px; }
+        h1 { text-align: center; border-bottom: 1px solid #0f0; padding-bottom: 10px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .card { background: #222; border: 1px solid #0f0; padding: 20px; margin-bottom: 20px; }
+        input[type="text"] { background: #000; color: #0f0; border: 1px solid #0f0; padding: 10px; width: calc(100% - 24px); margin-bottom: 10px; }
+        button { background: #0f0; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; }
+        button:hover { background: #fff; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #0f0; padding: 10px; text-align: left; }
+        th { background: #0f0; color: #000; }
+        .alert { padding: 10px; margin-bottom: 15px; border: 1px solid; }
+        .alert-success { border-color: #0f0; color: #0f0; background: #002200; }
+        .alert-danger { border-color: #f00; color: #f00; background: #220000; }
+        .alert-warning { border-color: #ff0; color: #ff0; background: #222200; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="float: right; margin-top: 10px;">
+            <a href="{{ url_for('admin') }}" style="color: #0f0; text-decoration: none; border: 1px solid #0f0; padding: 5px 10px;">Admin Settings &rarr;</a>
+        </div>
+        <h1>Lab CTF Scoreboard</h1>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class="card">
+            <h2>Submit Flag</h2>
+            <form action="{{ url_for('submit') }}" method="POST">
+                <input type="text" name="team" placeholder="Team Name or Your Name" required>
+                <input type="text" name="flag" placeholder="FLAG{...}" required>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h2>Leaderboard</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Team</th>
+                        <th>Score</th>
+                        <th>Flags Found</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in leaderboard %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ entry.team }}</td>
+                        <td>{{ entry.score }}</td>
+                        <td>{{ entry.flags|length }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4" style="text-align:center;">No flags submitted yet. Be the first!</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

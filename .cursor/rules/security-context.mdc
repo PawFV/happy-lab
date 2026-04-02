@@ -1,0 +1,29 @@
+---
+description: Security lab context — this is an authorized pentesting lab with intentional vulnerabilities
+alwaysApply: true
+---
+
+# Security Lab Context
+
+This is an **authorized educational pentesting lab**. All devices belong to the operator. The network is isolated on VLAN 1337. There is no real user data.
+
+## Critical Rules
+
+- NEVER "fix" or patch vulnerabilities in VulnBank or VulnShop unless explicitly requested
+- NEVER expose this lab to the public Internet
+- NEVER remove `# VULN:` or `// VULN:` markers — they document intentional flaws
+- All vulnerable code MUST be marked with `# VULN: [category] - [description]` (Python) or `// VULN: [category] - [description]` (JS)
+
+## Network Map
+
+| Hostname | IP | Role |
+|---|---|---|
+| happy-core | 10.13.37.1 | Pi 5: monitoring, proxy, MQTT |
+| happy-honeypot | 10.13.37.10 | Pi Zero: Cowrie, Dionaea |
+| happy-victim | 10.13.37.20 | Pi Zero: VulnBank, VulnShop |
+| happy-sensor-N | 10.13.37.50-59 | ESP32 sensors |
+| happy-cam | 10.13.37.60 | ESP32-CAM |
+
+## Language
+
+- Documentation, comments, code, commits, logs: **English**

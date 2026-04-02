@@ -1,0 +1,27 @@
+---
+description: Shell script conventions for infra and automation
+globs: "**/*.sh"
+alwaysApply: false
+---
+
+# Shell Script Conventions
+
+- Shell: **bash** (not sh, not zsh)
+- First line: `#!/usr/bin/env bash`
+- Second line: `set -euo pipefail`
+- Indent: 2 spaces
+- Quote all variables: `"${var}"` not `$var`
+- Use `[[ ]]` instead of `[ ]`
+
+## Script Locations
+
+- Deploy/reset/health: `infra/scripts/`
+- Monitoring: `scripts/monitoring/` (if legacy)
+- Setup/provisioning: `scripts/setup/` (if legacy)
+
+## Key Scripts
+
+```bash
+bash infra/scripts/reset-lab.sh      # full lab reset
+bash infra/scripts/health-check.sh   # check all services
+```

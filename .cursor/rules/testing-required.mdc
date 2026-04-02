@@ -1,0 +1,50 @@
+---
+description: All features and bug fixes must include unit tests
+globs: 
+alwaysApply: true
+---
+
+# Testing Requirements
+
+Every new feature, vulnerability, bug fix, or route **must include unit tests** before the code is considered complete.
+
+## Workflow
+
+1. Write or update the tests first (or alongside) the feature
+2. Run the full test suite and confirm it passes
+3. Never skip tests — broken tests block the change
+
+## Python (VulnBank) — pytest
+
+- Framework: **pytest** (with `pytest-cov` for coverage)
+- Test location: `labs/vulnbank/tests/`
+- Naming: `test_<module>.py` with functions `test_<behavior>()`
+- Use Flask's test client (`app.test_client()`)
+- Run: `cd labs/vulnbank && pytest tests/ -v`
+
+## JavaScript (VulnShop) — vitest + supertest
+
+- Framework: **vitest** (with `supertest` for HTTP assertions)
+- Test location: `labs/vulnshop/tests/`
+- Naming: `<module>.test.js` with `describe` / `it` blocks
+- Run: `cd labs/vulnshop && pnpm test`
+
+## What to Test
+
+- Every HTTP route returns expected status codes
+- Auth flows work (login, register, logout, session)
+- CRUD operations (create/read posts, upload files, search)
+- Edge cases (empty input, missing params, not-found)
+- Correct redirects and error messages
+
+## What NOT to Test
+
+- **Do NOT write security/pentest tests** (SQLi, XSS, IDOR exploitation, etc.)
+- Security testing is done manually by the lab operator — that's the whole point of this project
+- Tests verify the app **works**, not that it's **breakable**
+
+## What NOT to Do
+
+- No custom shell-script test runners
+- No `assert` scattered in app code as "tests"
+- No skipping tests with `@pytest.mark.skip` or `.skip()` without a reason

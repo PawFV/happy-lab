@@ -1,0 +1,28 @@
+---
+description: JavaScript/Node.js conventions for VulnShop
+globs: "**/*.js"
+alwaysApply: false
+---
+
+# JavaScript/Node.js Conventions
+
+- Formatter: **Prettier** (default config)
+- Indent: 2 spaces
+- Variables: `const` / `let` (never `var`)
+- Modules: ESM (`import/export`) where possible, CJS for legacy compat
+- Package manager: **pnpm** (never npm or yarn)
+
+## VulnShop Specifics
+
+- App entrypoint: `labs/vulnshop/index.js`
+- Routes go in `labs/vulnshop/src/routes/` (when modularized)
+- Mark vulnerabilities: `// VULN: [category] - [description]`
+- Document in `labs/vulnshop/vulns/VULNERABILITIES.md`
+- Tests in `labs/vulnshop/tests/test_vulns.js`
+- Lock file: `pnpm-lock.yaml`
+
+## Testing
+
+```bash
+cd labs/vulnshop && pnpm test
+```

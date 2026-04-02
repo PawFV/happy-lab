@@ -1,0 +1,27 @@
+---
+description: Docker and docker-compose conventions
+globs: "**/Dockerfile*,**/docker-compose*.yml"
+alwaysApply: false
+---
+
+# Docker Conventions
+
+- **Pin image versions** — never use `:latest` (e.g. `python:3.11-slim`, `node:20-slim`)
+- One `docker-compose.yml` per service group
+- Use `.dockerignore` in every build context
+- Root compose: `docker-compose.yml` at repo root
+
+## Intentional Misconfigurations
+
+VulnBank and VulnShop Dockerfiles have **intentional** security misconfigurations marked with `# VULN:`. Do NOT fix them unless asked.
+
+Examples: running as root, debug mode, exposed debug ports.
+
+## Compose Commands
+
+```bash
+docker compose up -d          # start all
+docker compose down           # stop all
+docker compose build --no-cache  # rebuild
+docker compose logs -f vulnbank  # follow logs
+```

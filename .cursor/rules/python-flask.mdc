@@ -1,0 +1,29 @@
+---
+description: Python/Flask conventions for VulnBank and lab scripts
+globs: "**/*.py"
+alwaysApply: false
+---
+
+# Python Conventions
+
+- Formatter: **Black** (default config)
+- Indent: 4 spaces
+- Type hints: optional, encouraged in new code
+- Imports: stdlib → third-party → local (one blank line between groups)
+
+## VulnBank Specifics
+
+- App entrypoint: `labs/vulnbank/app.py`
+- Routes go in `labs/vulnbank/app/routes/` (when modularized)
+- Templates in `labs/vulnbank/app/templates/`
+- Mark vulnerabilities: `# VULN: [category] - [description]`
+- Document in `labs/vulnbank/vulns/VULNERABILITIES.md`
+- Tests in `labs/vulnbank/tests/test_vulns.py`
+- Dependencies: `labs/vulnbank/requirements.txt` (pin versions)
+- Virtual env: `.venv/` (already gitignored)
+
+## Testing
+
+```bash
+cd labs/vulnbank && pytest tests/
+```

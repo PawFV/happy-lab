@@ -1,0 +1,63 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv/
+venv/
+*.egg
+
+# Node.js
+node_modules/
+dist/
+npm-debug.log*
+
+# PlatformIO / ESP32
+.pio/
+.vscode/
+*.elf
+*.bin
+*.hex
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+*.log
+logs/
+
+# Secrets — never commit
+.env
+.env.*
+secrets/
+*.key
+*.pem
+*.crt
+credentials.json
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE
+.idea/
+*.swp
+*.swo
+*~
+
+# Cursor (keep rules and skills, ignore caches)
+.cursor/*
+!.cursor/rules/
+!.cursor/skills/
+
+# Docker volumes data
+data/
+volumes/
+
+# Backups
+backups/
+*.tar.gz
+*.bak

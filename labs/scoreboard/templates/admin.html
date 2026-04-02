@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scoreboard Admin</title>
+    <style>
+        body { font-family: monospace; background-color: #111; color: #0f0; margin: 0; padding: 20px; }
+        h1 { text-align: center; border-bottom: 1px solid #0f0; padding-bottom: 10px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .card { background: #222; border: 1px solid #0f0; padding: 20px; margin-bottom: 20px; }
+        input[type="password"], select { background: #000; color: #0f0; border: 1px solid #0f0; padding: 10px; width: calc(100% - 24px); margin-bottom: 10px; }
+        button { background: #0f0; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; }
+        button:hover { background: #fff; }
+        .alert { padding: 10px; margin-bottom: 15px; border: 1px solid; }
+        .alert-success { border-color: #0f0; color: #0f0; background: #002200; }
+        .alert-danger { border-color: #f00; color: #f00; background: #220000; }
+        .alert-warning { border-color: #ff0; color: #ff0; background: #222200; }
+        .nav { margin-bottom: 20px; }
+        .nav a { color: #0f0; text-decoration: none; border-bottom: 1px dashed #0f0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav"><a href="{{ url_for('index') }}">&larr; Back to Scoreboard</a></div>
+        <h1>Admin Settings</h1>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class="card">
+            <h2>Generate Dynamic Vulnerabilities (AI)</h2>
+            <p>Input your API key to mutate the codebase and generate fresh vulnerabilities via an LLM. The vulnerable containers will restart automatically.</p>
+            <form action="{{ url_for('generate') }}" method="POST">
+                <label for="provider">LLM Provider</label><br>
+                <select name="provider" id="provider">
+                    <option value="openai">OpenAI (GPT-4o)</option>
+                    <option value="anthropic">Anthropic (Claude 3.5)</option>
+                </select><br><br>
+
+                <label for="api_key">API Key</label><br>
+                <input type="password" name="api_key" id="api_key" placeholder="sk-..." required>
+                
+                <button type="submit">Generate New Challenges</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

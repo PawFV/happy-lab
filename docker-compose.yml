@@ -1,0 +1,83 @@
+# VulnBank: MySQL 5.7 (pinned) — common RDBMS for SQLi labs; look up MySQL 5.7 / Oracle CPU advisories for server CVEs.
+# VulnShop: in-memory data; MongoDB for NoSQL-style flows / future wiring.
+
+services:
+  mysql:
+    image: mysql:5.7.44
+    container_name: happy-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: vulnroot
+      MYSQL_DATABASE: vulnbank
+      MYSQL_USER: vulnbank
+      MYSQL_PASSWORD: vulnpass
+    ports:
+      - "3306:3306"
+    volumes:
+      - vulnbank-mysql:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-pvulnroot"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+
+  mongo:
+    image: mongo:5.0.25
+    container_name: happy-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  vulnbank:
+    build: ./labs/vulnbank
+    container_name: vulnbank
+    ports:
+      - "5000:5000"
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_PORT: "3306"
+      MYSQL_USER: vulnbank
+      MYSQL_PASSWORD: vulnpass
+      MYSQL_DATABASE: vulnbank
+      DATABASE_BACKUP_FILE: /app/uploads/database_backup.sql
+    volumes:
+      - ./labs/vulnbank:/app
+      - vulnbank-uploads:/app/uploads
+    depends_on:
+      mysql:
+        condition: service_healthy
+    restart: unless-stopped
+
+  vulnshop:
+    build: ./labs/vulnshop
+    container_name: vulnshop
+    ports:
+      - "3001:3001"
+    environment:
+      MONGODB_URI: mongodb://mongo:27017/vulnshop
+    volumes:
+      - ./labs/vulnshop:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - mongo
+    restart: unless-stopped
+
+  scoreboard:
+    build: ./labs/scoreboard
+    container_name: happy-scoreboard
+    ports:
+      - "8000:8000"
+    volumes:
+      - scoreboard-data:/app/data
+      - .:/project
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+
+volumes:
+  vulnbank-uploads:
+  vulnbank-mysql:
+  mongo-data:
+  scoreboard-data:
