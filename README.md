@@ -5,6 +5,7 @@
 ---
 
 ## Architecture
+
 ```mermaid
 graph TD
     DEV["Dev PC<br/>Git, code, tests"] -->|"deploy script<br/>tar + scp + ssh"| CORE
